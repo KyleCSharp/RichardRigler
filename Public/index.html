@@ -3,107 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="Style.css" />
   <title>In Loving Memory of Richard Rigler</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #e0eafc, #cfdef3);
-      color: #333;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-
-    header {
-      background-color: #2e3a59;
-      color: #fff;
-      padding: 30px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2em;
-      letter-spacing: 1px;
-    }
-
-    main {
-      padding: 30px 20px 100px;
-    }
-
-    .photo {
-      margin: 30px 0;
-    }
-
-    .photo img {
-      max-width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    p {
-      max-width: 700px;
-      margin: 0 auto 20px;
-      font-size: 1.1em;
-      line-height: 1.6;
-      color: #2c3e50;
-    }
-
-    .carousel {
-      position: relative;
-      max-width: 1200px;
-      margin: 40px auto;
-      overflow: hidden;
-      border-radius: 10px;
-      background: #ffffffdd;
-      padding: 10px 0;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .slides {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .slide {
-      flex: 0 0 25%;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-
-    .slide img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s;
-    }
-
-    .slide img:hover {
-      transform: scale(1.05);
-    }
-
-    @media (max-width: 768px) {
-      .slide {
-        flex: 0 0 100%;
-      }
-    }
-
-    footer {
-      background-color: #2e3a59;
-      color: #fff;
-      padding: 12px 0;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 0.9em;
-      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
-    }
-  </style>
 </head>
 <body>
   <header>
+    
     <h1>In Loving Memory of Richard Rigler</h1>
   </header>
 
@@ -111,10 +16,14 @@
     <div class="photo">
       <img src="Images/IMG_0626.jpeg" alt="Richard Rigler" />
     </div>
-    <p>Richard Rigler was a cherished soul whose kindness, strength, and love left a lasting impression on all who knew him. His legacy lives on in the hearts of family, friends, and everyone whose life he touched.</p>
+    <p><strong>Richard Rigler was a cherished soul whose kindness, strength, and love left a lasting impression on all who knew him. His legacy lives on in the hearts of family, friends, and everyone whose life he touched.</strong></p>
     <p><strong>Born:</strong> February 26, 1953 &nbsp; | &nbsp; <strong>Passed:</strong> April 19, 2025</p>
 
+<a href="about.html" class="shadow-link">Lovely Letters</a>
+
     <div class="carousel">
+      <div class="arrow left" onclick="prevSlide()">&#10094;</div>
+  <div class="arrow right" onclick="nextSlide()">&#10095;</div>
       <div class="slides">
         <div class="slide"><img src="Images/8318718201646773962.jpeg" alt="Image 1" /></div>
         <div class="slide"><img src="Images/IMG_0644.jpeg" alt="Image 2" /></div>
@@ -124,35 +33,81 @@
         <div class="slide"><img src="Images/IMG_0626.jpeg" alt="Image 6" /></div>
         <div class="slide"><img src="Images/IMG_0627.jpeg" alt="Image 7" /></div>
         <div class="slide"><img src="Images/IMG_0624.jpeg" alt="Image 8" /></div>
+        <div class="slide"><img src="Images/April 143.jpg" alt="Image 8" /></div>
+        <div class="slide"><img src="Images/IMG_0743.jpg" alt="Image 8" /></div>
+        <div class="slide"><img src="Images/IMG_0966.jpg" alt="Image 8" /></div>
+        <div class="slide"><img src="Images/IMG_2528.jpg" alt="Image 8" /></div>
+        <div class="slide"><img src="Images/IMG_2801.JPG" alt="Image 8" /></div>
+        
       </div>
     </div>
+    
   </main>
 
   <footer>
-    <p>&copy; 2025 In Loving Memory of Richard Rigler</p>
+    <p>&copy; 2025 Grandson Kyle Rigler & Granddaughter Marissa Jackson</p>
   </footer>
-
+  <div id="fullscreen-exit" onclick="exitFullscreen()">X</div>
   <script>
     const slidesContainer = document.querySelector('.slides');
-    const slides = document.querySelectorAll('.slide');
-    const slideCount = slides.length;
+const slides = document.querySelectorAll('.slide');
+const slideCount = slides.length;
 
-    let visibleSlides = window.innerWidth <= 768 ? 1 : 4;
-    let currentIndex = 0;
+let visibleSlides = window.innerWidth <= 768 ? 1 : 4;
+let currentIndex = 0;
 
-    function moveCarousel() {
-      currentIndex = (currentIndex + 1) % (slideCount - visibleSlides + 1);
-      const slideWidth = slides[0].clientWidth;
-      slidesContainer.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+function updateCarousel() {
+  const slideWidth = slides[0].clientWidth;
+  slidesContainer.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+}
+
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % (slideCount - visibleSlides + 1);
+  updateCarousel();
+}
+
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + (slideCount - visibleSlides + 1)) % (slideCount - visibleSlides + 1);
+  updateCarousel();
+}
+
+// Auto-scroll
+setInterval(nextSlide, 5000);
+
+// Adjust for resize
+window.addEventListener('resize', () => {
+  visibleSlides = window.innerWidth <= 768 ? 1 : 4;
+  currentIndex = 0;
+  updateCarousel();
+});
+document.querySelectorAll('.slide img').forEach((img) => {
+  img.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      img.requestFullscreen().then(() => {
+        document.getElementById('fullscreen-exit').classList.add('show');
+      });
+    } else {
+      document.exitFullscreen();
     }
+  });
+});
 
-    setInterval(moveCarousel, 3000);
+function exitFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+}
 
-    window.addEventListener('resize', () => {
-      visibleSlides = window.innerWidth <= 768 ? 1 : 4;
-      currentIndex = 0;
-      slidesContainer.style.transform = `translateX(0)`;
-    });
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.getElementById('fullscreen-exit');
+  if (!document.fullscreenElement) {
+    btn.classList.remove('show');
+  }
+});
+
+
+
   </script>
+
 </body>
 </html>
