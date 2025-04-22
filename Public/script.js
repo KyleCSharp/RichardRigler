@@ -11,12 +11,23 @@ function getSlidesPerView() {
 }
 
 function scrollSlides(direction) {
+  const slide = slides[0];
+  const slideWidth = slide.offsetWidth;
   const visibleSlides = getSlidesPerView();
-  const newIndex = Math.min(Math.max(currentIndex + direction, 0), slides.length - visibleSlides);
-  currentIndex = newIndex;
-  slides[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+
+  const maxIndex = slides.length - visibleSlides;
+  currentIndex = Math.max(0, Math.min(currentIndex + direction, maxIndex));
+
+  const scrollAmount = slideWidth * currentIndex;
+
+  slidesContainer.scrollTo({
+    left: scrollAmount,
+    behavior: 'smooth'
+  });
+
   pauseAutoScroll();
 }
+
 
 function startAutoScroll() {
   autoScrollTimer = setInterval(() => {
