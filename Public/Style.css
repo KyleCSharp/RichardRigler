@@ -83,31 +83,29 @@
         flex: 0 0 100%;
       }
     }
+    .arrow-controls {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+    }
+    
     .arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2.5rem;
-  color: white;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 10px;
-  cursor: pointer;
-  z-index: 10;
-  border-radius: 50%;
-  user-select: none;
-}
-
-.arrow.left {
-  left: 10px;
-}
-
-.arrow.right {
-  right: 10px;
-}
-
-.arrow:hover {
-  background: rgba(0, 0, 0, 0.7);
-}
+      font-size: 2.5rem;
+      color: white;
+      background: #2e3a59;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-radius: 10px;
+      user-select: none;
+      transition: background 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .arrow:hover {
+      background: #3c4c70;
+    }
+    
 
 img:fullscreen {
   object-fit: contain;
