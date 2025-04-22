@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="Style.css" />
+  <link rel="stylesheet" href="style.css" />
   <title>In Loving Memory of Richard Rigler</title>
 </head>
 <body>
   <header>
-    
     <h1>In Loving Memory of Richard Rigler</h1>
   </header>
 
@@ -16,170 +15,45 @@
     <div class="photo">
       <img src="Images/IMG_0626.jpeg" alt="Richard Rigler" />
     </div>
-    <p><strong>Richard Rigler was a cherished soul whose kindness, strength, and love left a lasting impression on all who knew him. His legacy lives on in the hearts of family, friends, and everyone whose life he touched.</strong></p>
+    <p><strong>Richard Rigler was a cherished soul whose kindness, strength, and love left a lasting impression on all who knew him.</strong></p>
     <p><strong>Born:</strong> February 26, 1953 &nbsp; | &nbsp; <strong>Passed:</strong> April 19, 2025</p>
 
-<a href="about.html" class="shadow-link">Lovely Letters</a>
+    <a href="about.html" class="shadow-link">Lovely Letters</a>
 
     <div class="carousel">
-      <div class="slides">
-        <div class="slide"><img src="Images/8318718201646773962.jpeg" alt="Image 1" /></div>
-        <div class="slide"><img src="Images/IMG_0644.jpeg" alt="Image 2" /></div>
-        <div class="slide"><img src="Images/IMG_0645.jpeg" alt="Image 3" /></div>
-        <div class="slide"><img src="Images/Resized_IMG_8899_1745328835714.jpeg" alt="Image 4" /></div>
-        <div class="slide"><img src="Images/IMG_0620.jpeg" alt="Image 5" /></div>
-        <div class="slide"><img src="Images/IMG_0626.jpeg" alt="Image 6" /></div>
-        <div class="slide"><img src="Images/IMG_0627.jpeg" alt="Image 7" /></div>
-        <div class="slide"><img src="Images/IMG_0624.jpeg" alt="Image 8" /></div>
-        <div class="slide"><img src="Images/April 143.jpg" alt="Image 8" /></div>
-        <div class="slide"><img src="Images/IMG_0743.jpg" alt="Image 8" /></div>
-        <div class="slide"><img src="Images/IMG_0966.jpg" alt="Image 8" /></div>
-        <div class="slide"><img src="Images/IMG_2528.jpg" alt="Image 8" /></div>
-        <div class="slide"><img src="Images/IMG_2801.JPG" alt="Image 8" /></div>
-        <div class="slide"><img src="Images/rana 09 024.jpg" alt="Image 9" /></div>
-        <div class="slide"><img src="Images/rana 09 048.jpg" alt="Image 10" /></div>
-        <div class="slide"><img src="Images/rana 09 100.jpg" alt="Image 11" /></div>
-        <div class="slide"><img src="Images/rana 09 130.jpg" alt="Image 12" /></div>
-
-        
+      <div class="slides" id="slides">
+        <div class="slide"><img src="Images/8318718201646773962.jpeg" /></div>
+        <div class="slide"><img src="Images/April 143.jpg" /></div>
+        <div class="slide"><img src="Images/IMG_0620.jpeg" /></div>
+        <div class="slide"><img src="Images/IMG_0624.jpeg" /></div>
+        <div class="slide"><img src="Images/IMG_0626.jpeg" /></div>
+        <div class="slide"><img src="Images/IMG_0627.jpeg" /></div>
+        <div class="slide"><img src="Images/IMG_0644.jpeg" /></div>
+        <div class="slide"><img src="Images/IMG_0645.jpeg" /></div>
+        <div class="slide"><img src="Images/IMG_0743.jpg" /></div>
+        <div class="slide"><img src="Images/IMG_0966.jpg" /></div>
+        <div class="slide"><img src="Images/IMG_2528.jpg" /></div>
+        <div class="slide"><img src="Images/IMG_2801.JPG" /></div>
+        <div class="slide"><img src="Images/rana 09 024.jpg" /></div>
+        <div class="slide"><img src="Images/rana 09 048.jpg" /></div>
+        <div class="slide"><img src="Images/rana 09 100.jpg" /></div>
+        <div class="slide"><img src="Images/rana 09 130.jpg" /></div>
+        <div class="slide"><img src="Images/Resized_IMG_8899_1745328835714.jpeg" /></div>
       </div>
-   
-    
+ 
     </div>
+
     <div class="arrow-controls">
-      <div class="arrow left" onclick="prevSlide()">←</div>
-      <div class="arrow right" onclick="nextSlide()">→</div>
+      <div class="arrow left" onclick="scrollSlides(-1)">←</div>
+      <div class="arrow right" onclick="scrollSlides(1)">→</div>
     </div>
   </main>
 
   <footer>
     <p>&copy; 2025 Grandson Kyle Rigler & Granddaughter Marissa Jackson</p>
   </footer>
+
   <div id="fullscreen-exit" onclick="exitFullscreen()">X</div>
-  <script>
-    const slidesContainer = document.querySelector('.slides');
-    const slides = document.querySelectorAll('.slide');
-    const slideCount = slides.length;
-    const fullscreenExitBtn = document.getElementById('fullscreen-exit');
-  
-    let visibleSlides = window.innerWidth <= 768 ? 1 : 4;
-    let currentIndex = 0;
-    let autoScrollTimer;
-    let resumeTimeout;
-  
-    function updateCarousel() {
-      const slideWidth = slides[0].clientWidth;
-      slidesContainer.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
-    }
-  
-    function nextSlide() {
-  const maxIndex = slideCount - visibleSlides;
-  if (currentIndex < maxIndex) {
-    currentIndex += .5;
-  } else {
-    currentIndex = 0;
-  }
-  updateCarousel();
-}
-
-function prevSlide() {
-  const maxIndex = slideCount - visibleSlides;
-  if (currentIndex > 0) {
-    currentIndex -= .5;
-  } else {
-    currentIndex = maxIndex;
-  }
-  updateCarousel();
-}
-    function startAutoScroll() {
-      autoScrollTimer = setInterval(nextSlide, 5000);
-    }
-  
-    function pauseAutoScroll() {
-      clearInterval(autoScrollTimer);
-      clearTimeout(resumeTimeout);
-      resumeTimeout = setTimeout(() => {
-        startAutoScroll();
-      }, 300000); // 5 minutes
-    }
-  
-    function userInteracted() {
-      pauseAutoScroll();
-    }
-  
-    window.addEventListener('resize', () => {
-      visibleSlides = window.innerWidth <= 768 ? 1 : 4;
-      currentIndex = 0;
-      updateCarousel();
-    });
-  
-    // Arrow click handlers
-    document.querySelector('.arrow.left').addEventListener('click', () => {
-      prevSlide();
-      userInteracted();
-    });
-  
-    document.querySelector('.arrow.right').addEventListener('click', () => {
-      nextSlide();
-      userInteracted();
-    });
-  
-    // Arrow key support
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        prevSlide();
-        userInteracted();
-      } else if (e.key === 'ArrowRight') {
-        nextSlide();
-        userInteracted();
-      }
-    });
-  
-    // Fullscreen image handling
-    document.querySelectorAll('.slide img').forEach((img) => {
-      img.addEventListener('click', () => {
-        if (img.requestFullscreen) {
-          img.requestFullscreen().then(() => {
-            fullscreenExitBtn.classList.add('show');
-          }).catch(() => {
-            img.classList.add('ios-fullscreen');
-            fullscreenExitBtn.classList.add('show');
-            document.body.style.overflow = 'hidden';
-          });
-        } else {
-          img.classList.add('ios-fullscreen');
-          fullscreenExitBtn.classList.add('show');
-          document.body.style.overflow = 'hidden';
-        }
-      });
-    });
-  
-    fullscreenExitBtn.addEventListener('click', exitFullscreen);
-  
-    function exitFullscreen() {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        document.querySelectorAll('.ios-fullscreen').forEach(img => img.classList.remove('ios-fullscreen'));
-        document.body.style.overflow = '';
-        fullscreenExitBtn.classList.remove('show');
-      }
-    }
-  
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        fullscreenExitBtn.classList.remove('show');
-      }
-    });
-  
-    // Initialize
-    updateCarousel();
-    startAutoScroll();
-  </script>
-  
-
-
-  
-
+  <script src="script.js"></script>
 </body>
 </html>
