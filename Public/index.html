@@ -50,64 +50,75 @@
   <div id="fullscreen-exit" onclick="exitFullscreen()">X</div>
   <script>
     const slidesContainer = document.querySelector('.slides');
-const slides = document.querySelectorAll('.slide');
-const slideCount = slides.length;
-
-let visibleSlides = window.innerWidth <= 768 ? 1 : 4;
-let currentIndex = 0;
-
-function updateCarousel() {
-  const slideWidth = slides[0].clientWidth;
-  slidesContainer.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
-}
-
-function nextSlide() {
-  currentIndex = (currentIndex + 1) % (slideCount - visibleSlides + 1);
-  updateCarousel();
-}
-
-function prevSlide() {
-  currentIndex = (currentIndex - 1 + (slideCount - visibleSlides + 1)) % (slideCount - visibleSlides + 1);
-  updateCarousel();
-}
-
-// Auto-scroll
-setInterval(nextSlide, 5000);
-
-// Adjust for resize
-window.addEventListener('resize', () => {
-  visibleSlides = window.innerWidth <= 768 ? 1 : 4;
-  currentIndex = 0;
-  updateCarousel();
-});
-document.querySelectorAll('.slide img').forEach((img) => {
-  img.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-      img.requestFullscreen().then(() => {
-        document.getElementById('fullscreen-exit').classList.add('show');
-      });
-    } else {
-      document.exitFullscreen();
+    const slides = document.querySelectorAll('.slide');
+    const slideCount = slides.length;
+    let visibleSlides = window.innerWidth <= 768 ? 1 : 4;
+    let currentIndex = 0;
+  
+    function updateCarousel() {
+      const slideWidth = slides[0].clientWidth;
+      slidesContainer.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
     }
-  });
-});
-
-function exitFullscreen() {
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  }
-}
-
-document.addEventListener('fullscreenchange', () => {
-  const btn = document.getElementById('fullscreen-exit');
-  if (!document.fullscreenElement) {
-    btn.classList.remove('show');
-  }
-});
-
-
-
+  
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % (slideCount - visibleSlides + 1);
+      updateCarousel();
+    }
+  
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + (slideCount - visibleSlides + 1)) % (slideCount - visibleSlides + 1);
+      updateCarousel();
+    }
+  
+    setInterval(nextSlide, 5000);
+  
+    window.addEventListener('resize', () => {
+      visibleSlides = window.innerWidth <= 768 ? 1 : 4;
+      currentIndex = 0;
+      updateCarousel();
+    });
+  
+    const fullscreenExitBtn = document.getElementById('fullscreen-exit');
+  
+    document.querySelectorAll('.slide img').forEach((img) => {
+      img.addEventListener('click', () => {
+        // Try entering fullscreen
+        if (img.requestFullscreen) {
+          img.requestFullscreen().catch(() => {
+            // fallback styling if fullscreen fails (iOS)
+            img.classList.add('ios-fullscreen');
+            fullscreenExitBtn.classList.add('show');
+            document.body.style.overflow = 'hidden';
+          });
+        } else {
+          // fallback for Safari/iOS
+          img.classList.add('ios-fullscreen');
+          fullscreenExitBtn.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+  
+    fullscreenExitBtn.addEventListener('click', exitFullscreen);
+  
+    function exitFullscreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        // fallback for iOS
+        document.querySelectorAll('.ios-fullscreen').forEach(img => img.classList.remove('ios-fullscreen'));
+        document.body.style.overflow = '';
+        fullscreenExitBtn.classList.remove('show');
+      }
+    }
+  
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        fullscreenExitBtn.classList.remove('show');
+      }
+    });
   </script>
+  
 
 </body>
 </html>

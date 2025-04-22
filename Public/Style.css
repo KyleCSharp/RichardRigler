@@ -170,6 +170,18 @@ footer p {
 }
 
 
+.ios-fullscreen {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: contain;
+  z-index: 99998;
+  background-color: black;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
 
 
