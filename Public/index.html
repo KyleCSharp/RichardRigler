@@ -36,6 +36,11 @@
         <div class="slide"><img src="Images/IMG_0966.jpg" alt="Image 8" /></div>
         <div class="slide"><img src="Images/IMG_2528.jpg" alt="Image 8" /></div>
         <div class="slide"><img src="Images/IMG_2801.JPG" alt="Image 8" /></div>
+        <div class="slide"><img src="Images/rana 09 024.jpg" alt="Image 9" /></div>
+        <div class="slide"><img src="Images/rana 09 048.jpg" alt="Image 10" /></div>
+        <div class="slide"><img src="Images/rana 09 100.jpg" alt="Image 11" /></div>
+        <div class="slide"><img src="Images/rana 09 130.jpg" alt="Image 12" /></div>
+
         
       </div>
    
@@ -55,8 +60,12 @@
     const slidesContainer = document.querySelector('.slides');
     const slides = document.querySelectorAll('.slide');
     const slideCount = slides.length;
+    const fullscreenExitBtn = document.getElementById('fullscreen-exit');
+  
     let visibleSlides = window.innerWidth <= 768 ? 1 : 4;
     let currentIndex = 0;
+    let autoScrollTimer;
+    let resumeTimeout;
   
     function updateCarousel() {
       const slideWidth = slides[0].clientWidth;
@@ -73,7 +82,21 @@
       updateCarousel();
     }
   
-    setInterval(nextSlide, 5000);
+    function startAutoScroll() {
+      autoScrollTimer = setInterval(nextSlide, 5000);
+    }
+  
+    function pauseAutoScroll() {
+      clearInterval(autoScrollTimer);
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        startAutoScroll();
+      }, 300000); // 5 minutes
+    }
+  
+    function userInteracted() {
+      pauseAutoScroll();
+    }
   
     window.addEventListener('resize', () => {
       visibleSlides = window.innerWidth <= 768 ? 1 : 4;
@@ -81,20 +104,40 @@
       updateCarousel();
     });
   
-    const fullscreenExitBtn = document.getElementById('fullscreen-exit');
+    // Arrow click handlers
+    document.querySelector('.arrow.left').addEventListener('click', () => {
+      prevSlide();
+      userInteracted();
+    });
   
+    document.querySelector('.arrow.right').addEventListener('click', () => {
+      nextSlide();
+      userInteracted();
+    });
+  
+    // Arrow key support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        userInteracted();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        userInteracted();
+      }
+    });
+  
+    // Fullscreen image handling
     document.querySelectorAll('.slide img').forEach((img) => {
       img.addEventListener('click', () => {
-        // Try entering fullscreen
         if (img.requestFullscreen) {
-          img.requestFullscreen().catch(() => {
-            // fallback styling if fullscreen fails (iOS)
+          img.requestFullscreen().then(() => {
+            fullscreenExitBtn.classList.add('show');
+          }).catch(() => {
             img.classList.add('ios-fullscreen');
             fullscreenExitBtn.classList.add('show');
             document.body.style.overflow = 'hidden';
           });
         } else {
-          // fallback for Safari/iOS
           img.classList.add('ios-fullscreen');
           fullscreenExitBtn.classList.add('show');
           document.body.style.overflow = 'hidden';
@@ -108,7 +151,6 @@
       if (document.fullscreenElement) {
         document.exitFullscreen();
       } else {
-        // fallback for iOS
         document.querySelectorAll('.ios-fullscreen').forEach(img => img.classList.remove('ios-fullscreen'));
         document.body.style.overflow = '';
         fullscreenExitBtn.classList.remove('show');
@@ -120,7 +162,14 @@
         fullscreenExitBtn.classList.remove('show');
       }
     });
+  
+    // Initialize
+    updateCarousel();
+    startAutoScroll();
   </script>
+  
+
+
   
 
 </body>
