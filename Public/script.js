@@ -38,7 +38,7 @@ function startAutoScroll() {
 function pauseAutoScroll() {
   clearInterval(autoScrollTimer);
   clearTimeout(resumeTimeout);
-  resumeTimeout = setTimeout(() => {
+  resumeTimeout = setTimeout(() => { 
     startAutoScroll();
   }, 5 * 60 * 1000);
 }
